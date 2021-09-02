@@ -56,3 +56,58 @@ def main():
     BEEP2 = pygame.mixer.Sound('beep2.org')
     BEEP3 = pygame.mixer.Sound('beep3.org')
     BEEP4 = pygame.mixer.Sound('beep4.org')
+
+    # Initialize some variables for a new game
+    pattern = []
+    currentStep = 0
+    lastClickTime = 0
+    score = 0
+    # when False, the pattern is playing. when True, waiting for the player to click a colored button:
+    waitingForInput = False
+
+    while True:
+        clickedButton = None
+        DISPLAYSURF.fill(bgColor)
+        drawButtons()
+
+        scoreSurf = BASICFONT.render('Score: ' + str(score), 1, WHITE)
+        scoreRect = scoreSurf.get_rect()
+        scoreRect.topLeft = (WINDOWWIDTH - 100, 10)
+        DISPLAYSURF.blit(scoreSurf, scoreRect)
+
+        DISPLAYSURF.blit(infoSurf, infoRect)
+
+        checkForQuit()
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONUP:
+                mousex, mousey = event.pos
+                clickedButton = getButtonClicked(mousex, mousey)
+            elif event.type == KEYDONW:
+                if event.key == K_q:
+                    clickedButton = YELLOW
+                elif event.key == K_w:
+                    clickedButton = BLUE
+                elif event.key == K_a:
+                    clickedButton = RED
+                elif event.key == K_s: 
+                    clicked = GREEN
+
+
+
+        if not waitingForInput:
+            # paly the pattern
+            pygame.display.update()
+            pygame.time.wait(1000)
+            pattern.append(random.choice(YELLOW, BLUE, RED, GREEN))
+            for button in pattern:
+                flashButtonAnimation(button)
+                pygame.time.wait(FLASHDELAY)
+            waitingForInput = True
+                
+
+
+
+
+    # 18:25
+
+
