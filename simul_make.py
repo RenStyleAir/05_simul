@@ -147,6 +147,43 @@ def checkForQuit():
         pygame.event.post(event)
     
 
+def flashButtonAnimation(color, animationSpeed =  50):
+    if color == YELLOW:
+        sound = BEEP1
+        flashColor = BRIGHTYELLOW
+        rectangle = YELLOWRECT
+    elif color == BLUE:
+        sound = BEEP2
+        flashColor = BRIGHTBLUE
+        rectangle = BLUERECT
+    elif color == RED:
+        sound = BEEP3
+        flashColor = BRIGHTRED
+        rectangle = REDRECT
+    elif color == GREEN:
+        sound = BEEP4
+        flashColor = BRIGHTGREEN
+        rectangle = GREENRECT
+
+    origSurf = DISPLAYSURF.copy()
+    flashSurf = pygame.surface((BUTTONSIZE, BUTTONSIZE))
+    flashSurf = flashSurf.convert_alpha()
+    r, g, b = flashColor
+    sound.play()
+    for start, end, step in ((0,255,1), (255,0, -1)):
+        for alpha in range(start, end, animationSpeed * step):
+            checkForQuit()
+            DISPLAYSURF.blit(origSurf,(0,0))
+            flashSurf.fill((r,g,b, alpha))
+            DISPLAYSURF.blit(flashSurf, rectangle.topleft)
+            pygame.display.update()
+            FPSCLOCK.tick(FPS)
+        DISPLAYSURF.blit(origSurf, (0,0))
+
+
+
+
+
 # new line 
 
 
