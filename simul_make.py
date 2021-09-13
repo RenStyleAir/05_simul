@@ -181,6 +181,34 @@ def flashButtonAnimation(color, animationSpeed =  50):
         DISPLAYSURF.blit(origSurf, (0,0))
 
 
+def drawButtons():
+    pygame.draw.rect(DISPLAYSURF, YELLOW, YELLOWRECT)
+    pygame.draw.rect(DISPLAYSURF, BLUE, BLUERECT)
+    pygame.draw.rect(DISPLAYSURF, RED, REDRECT)
+    pygame.draw.rect(DISPLAYSURF, GREEN, GREENRECT)
+
+
+def changeBackgroundAnimation(animationSpeed = 40):
+    global bgColor
+    newBgColor = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+
+    newBgSurf = pygame.Surface((WINDOWWIDTH, WINDOWHIGHT))
+    newBgSurf = newBgSurf.convert_alpha()
+    r,g,b = newBgColor
+    for alpha in range(0,255,animationSpeed):
+        checkForQuit()
+        DISPLAYSURF.fill(bgColor)
+
+        newBgSurf.fill(r,g,b,alpha)
+        DISPLAYSURF.blit(newBgSurf, (0,0))
+
+        drawButtons()
+
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+    bgColor = newBgColor
+    
+
 
 
 
