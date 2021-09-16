@@ -209,21 +209,43 @@ def changeBackgroundAnimation(animationSpeed = 40):
     bgColor = newBgColor
     
 
+def gameOverAnimation(color= WHITE, animationSpeed = 50):
+
+    origSurf = DISPLAYSURF.copy()
+    flashSurf = pygame.Surface(DISPLAYSURF.get_size())
+    flashSurf = flashSurf.convert_alpha()
+    BEEP1.play()
+    BEEP2.play()
+    BEEP3.play()
+    BEEP4.play()
+    r,g,b = color
+    for i in range(3):
+        for start, end, step in ((0,255,1),(255,0,-1)):
+
+
+            for alpha in range(start, end, animationSpeed * step):
+
+                checkForQuit()
+                flashSurf.fill(r,g,b,alpha)
+                DISPLAYSURF.blit(origSurf, (0,0))
+                DISPLAYSURF.blit(flashSurf, (0,0))
+                drawButtons()
+                pygame.display.update()
+                FPSCLOCK.tick(FPS)
 
 
 
-# new line 
+def getButtonClicked(x,y):
+    if YELLOWRECT.collidepiont((x,y)):
+        return YELLOW
+    elif BLUERECT.collidepiont((x,y)):
+        return BLUE
+    elif REDRECT.collidepiont((x,y)):
+        return RED
+    elif GREENRECT.collidepiont((x,y)):
+        return GREEN
+    return None
 
 
-
-
-
-    
-                
-
-
-
-
-    # 16.42
-
-
+if __name__=='__name__':
+    main()
