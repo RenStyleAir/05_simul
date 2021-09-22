@@ -74,7 +74,7 @@ def main():
 
         scoreSurf = BASICFONT.render('Score: ' + str(score), 1, WHITE)
         scoreRect = scoreSurf.get_rect()
-        scoreRect.topLeft = (WINDOWWIDTH - 100, 10)
+        scoreRect.topleft = (WINDOWWIDTH - 100, 10)
         DISPLAYSURF.blit(scoreSurf, scoreRect)
 
         DISPLAYSURF.blit(infoSurf, infoRect)
@@ -84,7 +84,7 @@ def main():
             if event.type == MOUSEBUTTONUP:
                 mousex, mousey = event.pos
                 clickedButton = getButtonClicked(mousex, mousey)
-            elif event.type == KEYDONW:
+            elif event.type == KEYDOWN:
                 if event.key == K_q:
                     clickedButton = YELLOW
                 elif event.key == K_w:
@@ -100,7 +100,7 @@ def main():
             # play the pattern
             pygame.display.update()
             pygame.time.wait(1000)
-            pattern.append(random.choice(YELLOW, BLUE, RED, GREEN))
+            pattern.append(random.choice((YELLOW, BLUE, RED, GREEN)))
             for button in pattern:
                 flashButtonAnimation(button)
                 pygame.time.wait(FLASHDELAY)
@@ -168,7 +168,7 @@ def flashButtonAnimation(color, animationSpeed =  50):
         rectangle = GREENRECT
 
     origSurf = DISPLAYSURF.copy()
-    flashSurf = pygame.surface((BUTTONSIZE, BUTTONSIZE))
+    flashSurf = pygame.Surface((BUTTONSIZE, BUTTONSIZE))
     flashSurf = flashSurf.convert_alpha()
     r, g, b = flashColor
     sound.play()
@@ -201,7 +201,7 @@ def changeBackgroundAnimation(animationSpeed = 40):
         checkForQuit()
         DISPLAYSURF.fill(bgColor)
 
-        newBgSurf.fill(r,g,b,alpha)
+        newBgSurf.fill((r,g,b,alpha))
         DISPLAYSURF.blit(newBgSurf, (0,0))
 
         drawButtons()
@@ -228,7 +228,7 @@ def gameOverAnimation(color= WHITE, animationSpeed = 50):
             for alpha in range(start, end, animationSpeed * step):
 
                 checkForQuit()
-                flashSurf.fill(r,g,b,alpha)
+                flashSurf.fill((r,g,b,alpha))
                 DISPLAYSURF.blit(origSurf, (0,0))
                 DISPLAYSURF.blit(flashSurf, (0,0))
                 drawButtons()
@@ -238,13 +238,13 @@ def gameOverAnimation(color= WHITE, animationSpeed = 50):
 
 
 def getButtonClicked(x,y):
-    if YELLOWRECT.collidepiont((x,y)):
+    if YELLOWRECT.collidepoint((x,y)):
         return YELLOW
-    elif BLUERECT.collidepiont((x,y)):
+    elif BLUERECT.collidepoint((x,y)):
         return BLUE
-    elif REDRECT.collidepiont((x,y)):
+    elif REDRECT.collidepoint((x,y)):
         return RED
-    elif GREENRECT.collidepiont((x,y)):
+    elif GREENRECT.collidepoint((x,y)):
         return GREEN
     return None
 
